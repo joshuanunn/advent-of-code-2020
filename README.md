@@ -20,6 +20,6 @@ $ go test ./day10_adapter_array
 ```
 
 ## License
-[MIT](license.txt)  
+[MIT](LICENSE)  
 
 Note that this repo contains example inputs for each puzzle day (input.txt), which have been generated on [Advent-of-Code](https://adventofcode.com) - these sample data files belong to [Eric Wastl](https://twitter.com/ericwastl).

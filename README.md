@@ -8,6 +8,8 @@ $ go test ./day10_adapter_array -bench=.
 ```
 | Day | Part | Time | Apparent Complexity (approx) |
 | :---: | :---: | :---: | :---: |
+| 6 | 1 | 0.96 μs ||
+| 6 | 2 | 0.95 μs ||
 | 7 | 1 | 39 ms ||
 | 7 | 2 | 7.8 μs ||
 | 8 | 1 | 17 μs ||

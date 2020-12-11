@@ -20,7 +20,6 @@ func main() {
 	// Part 2 - find number of valid combinations of adaptors in input.
 	count := sumBranches(data)
 	fmt.Printf("Part 2 - number of valid combinations found: %d.\n", count)
-
 }
 
 func sumBranches(adaptors []int) int {

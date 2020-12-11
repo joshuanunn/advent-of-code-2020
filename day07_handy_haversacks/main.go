@@ -31,7 +31,7 @@ func main() {
 	// Part 1 - count number of top level bags containing a shiny gold bag somewhere inside
 	// construct a slice of *Trees to represent bags
 	var bags []*Tree
-	for desc, _ := range rules {
+	for desc := range rules {
 		bags = append(bags, createTree(rules, desc))
 	}
 	count := searchTrees(bags, "shiny gold")

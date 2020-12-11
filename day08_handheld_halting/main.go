@@ -36,11 +36,19 @@ func main() {
 
 	// Part 2 - mutate nop|jmp instructions to find way to break infinite loop.
 	trials := mutateInstructions(instructions)
+	acc, ok = executor(trials)
+	if ok {
+		fmt.Printf("Part 2 - solution found. The accumulator value at escape is %d.\n", acc)
+	}
+}
+
+func executor(trials [][]*Instruction) (int, bool) {
 	for _, trial := range trials {
 		if acc, ok := execute(trial); ok {
-			fmt.Printf("Part 2 - solution found. The accumulator value at escape is %d.\n", acc)
+			return acc, true
 		}
 	}
+	return 0, false
 }
 
 // Generate a collection of mutated instructions, by replacing nop|jmp.
@@ -90,7 +98,7 @@ func execute(instructions []*Instruction) (int, bool) {
 		case "jmp":
 			pointer += current.value()
 		default:
-			log.Fatalf("instruction [%s] not defined", current)
+			log.Fatalf("instruction [%v] not defined", current)
 		}
 		if _, ok := history[pointer]; ok {
 			break

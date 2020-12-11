@@ -1,15 +1,16 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"io/ioutil"
 	"log"
-	"os"
+	"strings"
 )
 
 func main() {
 	// Read inputs into slice of []byte
-	grid := readInputs("input.txt")
+	input := readInputs("input.txt")
+	grid := parseInputs(input)
 
 	// Part 1 - count number of trees for run of (3, 1)
 	trees := slopeRun(grid, 3, 1)
@@ -51,21 +52,25 @@ func moveRightDown(grid [][]byte, posX, posY, right, down int) (int, int, int) {
 	return posX, posY, 0
 }
 
-// Parse input file into slice of []byte
-func readInputs(filename string) [][]byte {
-	file, err := os.Open(filename)
-	defer file.Close()
-	if err != nil {
-		log.Fatalf("failed to open %s", filename)
+func parseInputs(inputs []string) [][]byte {
+	var data [][]byte
+	for _, line := range inputs {
+		if len(line) > 0 {
+			data = append(data, []byte(line))
+		}
 	}
+	return data
+}
 
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
+func readInputs(filename string) []string {
+	b, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Fatalf("failed to open input.txt")
+	}
+	lines := string(b)
 
-	var inputs [][]byte
-	for scanner.Scan() {
-		// Represent each line as a slice of bytes
-		line := []byte(scanner.Text())
+	var inputs []string
+	for _, line := range strings.Split(lines, "\n") {
 		inputs = append(inputs, line)
 	}
 	return inputs

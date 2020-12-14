@@ -33,6 +33,12 @@ func TestPart2(t *testing.T) {
 	}
 }
 
+func BenchmarkRead(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		readInputs("input.txt")
+	}
+}
+
 func BenchmarkPart1(b *testing.B) {
 	input := readInputs("input.txt")
 

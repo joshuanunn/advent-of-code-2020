@@ -18,15 +18,20 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	input := readInputs("input.txt")
-	target := 657
 
-	want := 1766397
+	want := 657
 	sids := parseInputs(input)
 	sidMin, sidMax := intRange(sids)
-	got := findMissing(sids, sidMin, sidMax)
+	got := findMissing(sids, sidMin, sidMax)[0]
 
 	if got != want {
 		t.Errorf("got %d; want %d", got, want)
+	}
+}
+
+func BenchmarkRead(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		readInputs("input.txt")
 	}
 }
 

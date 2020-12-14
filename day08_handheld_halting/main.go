@@ -28,7 +28,8 @@ func (i *Instruction) value() int {
 
 func main() {
 	// Read inputs into slice of *Instruction
-	instructions := readInputs("input.txt")
+	input := readInputs("input.txt")
+	instructions := parseInputs(input)
 
 	// Part 1 - find value of accumulator at point we get a repeated instruction.
 	acc, ok := execute(instructions)
@@ -114,15 +115,9 @@ func execute(instructions []*Instruction) (int, bool) {
 }
 
 // Read in file and parse into a slice of *Instruction.
-func readInputs(filename string) []*Instruction {
-	b, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatalf("failed to open input.txt")
-	}
-	lines := string(b)
-
+func parseInputs(inputs []string) []*Instruction {
 	var instructions = []*Instruction{}
-	for _, line := range strings.Split(lines, "\n") {
+	for _, line := range inputs {
 		extract := pattern.FindAllStringSubmatch(line, -1)[0]
 		if len(extract) != 4 {
 			log.Fatalln("failed to parse instruction line")
@@ -139,4 +134,18 @@ func readInputs(filename string) []*Instruction {
 		instructions = append(instructions, ins)
 	}
 	return instructions
+}
+
+func readInputs(filename string) []string {
+	b, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Fatalf("failed to open input.txt")
+	}
+	lines := string(b)
+
+	var inputs []string
+	for _, line := range strings.Split(lines, "\n") {
+		inputs = append(inputs, line)
+	}
+	return inputs
 }

@@ -26,7 +26,8 @@ type Tree struct {
 
 func main() {
 	// Read inputs into map of []*Node representing bag rules
-	rules := readInputs("input.txt")
+	input := readInputs("input.txt")
+	rules := parseInputs(input)
 
 	// Part 1 - count number of top level bags containing a shiny gold bag somewhere inside
 	// construct a slice of *Trees to represent bags
@@ -129,15 +130,9 @@ func printTree(n *Node, indent int) {
 }
 
 // Read in file and parse into a map of bag rules
-func readInputs(filename string) map[string][]*Node {
-	b, err := ioutil.ReadFile(filename)
-	if err != nil {
-		log.Fatalf("failed to open input.txt")
-	}
-	lines := string(b)
-
+func parseInputs(inputs []string) map[string][]*Node {
 	var rules = make(map[string][]*Node)
-	for _, line := range strings.Split(lines, "\n") {
+	for _, line := range inputs {
 		bags := []*Node{}
 		desc := outer.FindStringSubmatch(line)[1]
 		matches := inner.FindAllStringSubmatch(line, -1)
@@ -152,4 +147,18 @@ func readInputs(filename string) map[string][]*Node {
 		rules[desc] = bags
 	}
 	return rules
+}
+
+func readInputs(filename string) []string {
+	b, err := ioutil.ReadFile(filename)
+	if err != nil {
+		log.Fatalf("failed to open input.txt")
+	}
+	lines := string(b)
+
+	var inputs []string
+	for _, line := range strings.Split(lines, "\n") {
+		inputs = append(inputs, line)
+	}
+	return inputs
 }

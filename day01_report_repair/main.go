@@ -1,35 +1,38 @@
 package main
 
 import (
-	"bufio"
+	"fmt"
+	"io/ioutil"
 	"log"
-	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	// Read inputs into int slice
 	inputs := readInputs("input.txt")
+	data := parseInputs(inputs)
 
 	// Part 1 - find two elements that sum to 2020 and calculate product
-	elements, ok := findIn(inputs, 0, 2020, 2)
+	elements, ok := findIn(data, 0, 2020, 2)
 	if ok {
-		summarise(elements)
+		product := summarise(elements)
+		fmt.Printf("Part 1 - product of elements = %d\n", product)
 	}
 
 	// Part 2 -find three elements that sum to 2020 and calculate product
-	elements, ok = findIn(inputs, 0, 2020, 3)
+	elements, ok = findIn(data, 0, 2020, 3)
 	if ok {
-		summarise(elements)
+		product := summarise(elements)
+		fmt.Printf("Part 2 - product of elements = %d\n", product)
 	}
 }
 
-func summarise(elements []int) {
+func summarise(elements []int) int {
 	product := 1
 	for _, val := range elements {
 		product *= val
 	}
-	log.Printf("Found elements: %v. Product = %d.\n", elements, product)
+	return product
 }
 
 func findIn(inputs []int, idx, target, level int) ([]int, bool) {
@@ -54,24 +57,30 @@ func findIn(inputs []int, idx, target, level int) ([]int, bool) {
 	return nil, false
 }
 
-// Parse input file into slice of ints
-func readInputs(filename string) []int {
-	file, err := os.Open(filename)
-	defer file.Close()
+func parseInputs(inputs []string) []int {
+	var data []int
+	for _, line := range inputs {
+		if len(line) > 0 {
+			val, err := strconv.Atoi(line)
+			if err != nil {
+				log.Fatalf("could not parse int on line")
+			}
+			data = append(data, val)
+		}
+	}
+	return data
+}
+
+func readInputs(filename string) []string {
+	b, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Fatalf("failed to open input.txt")
 	}
+	lines := string(b)
 
-	scanner := bufio.NewScanner(file)
-	scanner.Split(bufio.ScanLines)
-
-	var inputs []int
-	for scanner.Scan() {
-		number, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			log.Fatalf("error parsing line in inputs as int")
-		}
-		inputs = append(inputs, number)
+	var inputs []string
+	for _, line := range strings.Split(lines, "\n") {
+		inputs = append(inputs, line)
 	}
 	return inputs
 }

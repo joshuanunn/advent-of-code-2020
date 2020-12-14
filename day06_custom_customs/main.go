@@ -10,7 +10,8 @@ import (
 
 func main() {
 	// Read inputs into slice of []uint
-	blocks := readInputs("input.txt")
+	input := readInputs("input.txt")
+	blocks := parseInputs(input)
 
 	// Part 1 - count number of customs declarations using ruleset 1
 	count := countPart1(blocks)
@@ -54,21 +55,31 @@ func toBinary(chars string) uint {
 	return binary
 }
 
-// Read in file and split into passenger groups
-func readInputs(filename string) [][]uint {
+func parseInputs(inputs []string) [][]uint {
+	var blocks [][]uint
+	var block []uint
+	for i, line := range inputs {
+		if line != "" {
+			block = append(block, toBinary(line))
+		}
+		if line == "" || i == len(inputs)-1 {
+			blocks = append(blocks, block)
+			block = nil
+		}
+	}
+	return blocks
+}
+
+func readInputs(filename string) []string {
 	b, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Fatalf("failed to open input.txt")
 	}
-	contents := string(b)
+	lines := string(b)
 
-	var blocks [][]uint
-	for _, group := range strings.Split(contents, "\n\n") {
-		var block []uint
-		for _, line := range strings.Split(group, "\n") {
-			block = append(block, toBinary(line))
-		}
-		blocks = append(blocks, block)
+	var inputs []string
+	for _, line := range strings.Split(lines, "\n") {
+		inputs = append(inputs, line)
 	}
-	return blocks
+	return inputs
 }

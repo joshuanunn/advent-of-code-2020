@@ -6,9 +6,10 @@ import (
 
 func TestPart1(t *testing.T) {
 	input := readInputs("input.txt")
+	data := parseInputs(input)
 
 	want := 2210
-	got := prodDiffs(input)
+	got := prodDiffs(data)
 
 	if got != want {
 		t.Errorf("got %d; want %d", got, want)
@@ -17,26 +18,35 @@ func TestPart1(t *testing.T) {
 
 func TestPart2(t *testing.T) {
 	input := readInputs("input.txt")
+	data := parseInputs(input)
 
 	want := 7086739046912
-	got := sumBranches(input)
+	got := sumBranches(data)
 
 	if got != want {
 		t.Errorf("got %d; want %d", got, want)
 	}
 }
 
+func BenchmarkRead(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		readInputs("input.txt")
+	}
+}
+
 func BenchmarkPart1(b *testing.B) {
 	input := readInputs("input.txt")
 	for n := 0; n < b.N; n++ {
-		prodDiffs(input)
+		data := parseInputs(input)
+		prodDiffs(data)
 	}
 }
 
 func BenchmarkPart2(b *testing.B) {
 	input := readInputs("input.txt")
 	for n := 0; n < b.N; n++ {
-		sumBranches(input)
+		data := parseInputs(input)
+		sumBranches(data)
 	}
 }
 

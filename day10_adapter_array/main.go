@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	// Read inputs into slice of int
-	data := readInputs("input.txt")
+	input := readInputs("input.txt")
+	data := parseInputs(input)
 
 	// Part 1 - calculate number of 1 and 3 sequential diffs, and return product.
 	diffs := prodDiffs(data)
@@ -77,21 +77,30 @@ func prodDiffs(adaptors []int) int {
 	return ones * threes
 }
 
-// Read in file and parse into a slice of int
-func readInputs(filename string) []int {
+func parseInputs(inputs []string) []int {
+	var data []int
+	for _, line := range inputs {
+		if len(line) > 0 {
+			val, err := strconv.Atoi(line)
+			if err != nil {
+				log.Fatalf("could not parse int on line")
+			}
+			data = append(data, val)
+		}
+	}
+	return data
+}
+
+func readInputs(filename string) []string {
 	b, err := ioutil.ReadFile(filename)
 	if err != nil {
 		log.Fatalf("failed to open input.txt")
 	}
 	lines := string(b)
 
-	var data []int
+	var inputs []string
 	for _, line := range strings.Split(lines, "\n") {
-		val, err := strconv.Atoi(line)
-		if err != nil {
-			log.Fatalf("failed to parse int on line")
-		}
-		data = append(data, val)
+		inputs = append(inputs, line)
 	}
-	return data
+	return inputs
 }

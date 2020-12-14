@@ -9,6 +9,7 @@ $ go test ./day10_adapter_array -bench=.
 | Day | Part 1 | Part 2 |
 | :---: | :---: | :---: |
 | 1 | 10 μs | 425 μs |
+| 2 | 816 μs | 796 μs |
 | 3 | 2.2 μs | 10 μs |
 | 4 | 966 μs | 1.1 ms |
 | 5 | 952 ns | 965 ns |

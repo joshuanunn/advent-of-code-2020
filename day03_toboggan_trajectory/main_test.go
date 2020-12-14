@@ -35,18 +35,18 @@ func TestPart2(t *testing.T) {
 
 func BenchmarkPart1(b *testing.B) {
 	input := readInputs("input.txt")
-	grid := parseInputs(input)
 
 	for n := 0; n < b.N; n++ {
+		grid := parseInputs(input)
 		slopeRun(grid, 3, 1)
 	}
 }
 
 func BenchmarkPart2(b *testing.B) {
 	input := readInputs("input.txt")
-	grid := parseInputs(input)
 
 	for n := 0; n < b.N; n++ {
+		grid := parseInputs(input)
 		trees1 := slopeRun(grid, 1, 1)
 		trees2 := slopeRun(grid, 3, 1)
 		trees3 := slopeRun(grid, 5, 1)

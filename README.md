@@ -2,12 +2,13 @@
 These are my attempts at [Advent-of-Code](https://adventofcode.com) 2020 in Go. Benchmarks, tests and improvements will be added over time for each day.
 
 ## Benchmarks
-Benchmarks have been included to test the functions for parts 1 and 2 for each day - input file parsing has not been included as part of the tests. Quoted benchmark times are from a laptop (i7-10510U). Benchmarks can be run for any day from the base directory:
+Benchmarks have been included to test the functions for parts 1 and 2 for each day - initial input file parsing to []string has not been included as part of the tests. Quoted benchmark times are from a laptop (i7-10510U). Benchmarks can be run for any day from the base directory:
 ```
 $ go test ./day10_adapter_array -bench=.
 ```
 | Day | Part 1 | Part 2 |
 | :---: | :---: | :---: |
+| 1 | 10 μs | 425 μs |
 | 3 | 2.2 μs | 10 μs |
 | 4 | 966 μs | 1.1 ms |
 | 5 | 952 ns | 965 ns |

@@ -10,7 +10,7 @@ type Log struct {
 }
 
 func main() {
-	input := []int{1, 20, 8, 12, 0, 14}
+	input := []int32{1, 20, 8, 12, 0, 14}
 
 	// Part 1 - calculate number at end of round 2020.
 	number1 := solve(input, 2020)
@@ -21,39 +21,32 @@ func main() {
 	fmt.Printf("Part 2 - number at end of round 30000000 =  %d\n", number2)
 }
 
-func solve(initial []int, rounds int) int {
+func solve(initial []int32, rounds int32) int32 {
 	// map of number to last two rounds number spoken
-	curr := make([]int, rounds, rounds)
-	prev := make([]int, rounds, rounds)
+	curr := make([]int32, rounds, rounds)
+	prev := make([]int32, rounds, rounds)
 
 	// Start game with submitted numbers
 	for i, num := range initial {
-		curr[num] = i + 1
+		curr[num] = int32(i) + 1
 		prev[num] = -1
 	}
 	// Play out rest of game
-	var last, speak int
-	for x := len(initial); x < rounds; x++ {
-		// If last number not spoken before, then add and speak 0
-		if curr[last] == 0 {
+	var last int32
+	start := int32(len(initial))
+	for x := start; x < rounds; x++ {
+		// If last not spoken before or spoken once, speak 0, else speak diff
+		if curr[last] == 0 || prev[last] == -1 {
 			last = 0
-			curr[0] = x + 1
-			prev[0] = -1
-			continue
-		}
-		// If last number only spoken once, speak 0, else speak diff
-		if prev[last] == -1 {
-			speak = 0
 		} else {
-			speak = curr[last] - prev[last]
+			last = curr[last] - prev[last]
 		}
-		last = speak
-		if curr[speak] == 0 {
-			curr[speak] = x + 1
-			prev[speak] = -1
+		if curr[last] == 0 {
+			prev[last] = -1
+			curr[last] = x + 1
 		} else {
-			prev[speak] = curr[speak]
-			curr[speak] = x + 1
+			prev[last] = curr[last]
+			curr[last] = x + 1
 		}
 	}
 	return last

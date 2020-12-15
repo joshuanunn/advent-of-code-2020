@@ -21,6 +21,7 @@ $ go test ./day10_adapter_array -bench=.
 | 11 | 8.3 μs | 16 ms | 46 ms |
 | 12 | 22 μs | 237 μs | 255 μs |
 | 13 | 2.6 μs | 1.9 μs | 5.1 μs |
+| 14 | 22 μs | 382 μs | 15 ms |
 
 ## Tests
 Tests related to the specific input.txt can be run for each day from the base directory:

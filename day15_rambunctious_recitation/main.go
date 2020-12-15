@@ -23,43 +23,37 @@ func main() {
 
 func solve(initial []int, rounds int) int {
 	// map of number to last two rounds number spoken
-	history := make([]*Log, rounds, rounds)
+	curr := make([]int, rounds, rounds)
+	prev := make([]int, rounds, rounds)
 
 	// Start game with submitted numbers
 	for i, num := range initial {
-		history[num] = &Log{curr: i, prev: -1}
+		curr[num] = i + 1
+		prev[num] = -1
 	}
 	// Play out rest of game
-	var last int
+	var last, speak int
 	for x := len(initial); x < rounds; x++ {
 		// If last number not spoken before, then add and speak 0
-		if history[last] == nil {
+		if curr[last] == 0 {
 			last = 0
-			history[last] = &Log{curr: x, prev: -1}
+			curr[0] = x + 1
+			prev[0] = -1
 			continue
 		}
-		if history[last].prev == -1 {
-			// If last number has only been spoken once, update, and speak 0
-			speak := 0
-			last = speak
-
-			if history[speak] == nil {
-				history[speak] = &Log{curr: x, prev: -1}
-			} else {
-				history[speak].prev = history[speak].curr
-				history[speak].curr = x
-			}
+		// If last number only spoken once, speak 0, else speak diff
+		if prev[last] == -1 {
+			speak = 0
 		} else {
-			// If last number has been spoken more than once, speak diff
-			speak := history[last].curr - history[last].prev
-			last = speak
-
-			if history[speak] == nil {
-				history[speak] = &Log{curr: x, prev: -1}
-			} else {
-				history[speak].prev = history[speak].curr
-				history[speak].curr = x
-			}
+			speak = curr[last] - prev[last]
+		}
+		last = speak
+		if curr[speak] == 0 {
+			curr[speak] = x + 1
+			prev[speak] = -1
+		} else {
+			prev[speak] = curr[speak]
+			curr[speak] = x + 1
 		}
 	}
 	return last

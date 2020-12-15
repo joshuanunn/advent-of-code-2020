@@ -23,7 +23,7 @@ func main() {
 
 func solve(initial []int, rounds int) int {
 	// map of number to last two rounds number spoken
-	history := make(map[int]*Log)
+	history := make([]*Log, rounds, rounds)
 
 	// Start game with submitted numbers
 	for i, num := range initial {
@@ -33,7 +33,7 @@ func solve(initial []int, rounds int) int {
 	var last int
 	for x := len(initial); x < rounds; x++ {
 		// If last number not spoken before, then add and speak 0
-		if _, ok := history[last]; !ok {
+		if history[last] == nil {
 			last = 0
 			history[last] = &Log{curr: x, prev: -1}
 			continue
@@ -43,7 +43,7 @@ func solve(initial []int, rounds int) int {
 			speak := 0
 			last = speak
 
-			if _, ok := history[speak]; !ok {
+			if history[speak] == nil {
 				history[speak] = &Log{curr: x, prev: -1}
 			} else {
 				history[speak].prev = history[speak].curr
@@ -54,7 +54,7 @@ func solve(initial []int, rounds int) int {
 			speak := history[last].curr - history[last].prev
 			last = speak
 
-			if _, ok := history[speak]; !ok {
+			if history[speak] == nil {
 				history[speak] = &Log{curr: x, prev: -1}
 			} else {
 				history[speak].prev = history[speak].curr

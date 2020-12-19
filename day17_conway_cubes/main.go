@@ -34,7 +34,7 @@ func main() {
 	grid4D := parseInputs(input)
 	grid4D.cycle(6, 4)
 	count4D := grid4D.active()
-	fmt.Printf("Part 1 - total cubes in active state for 4 dimensions = %d (after 6 rounds)\n", count4D)
+	fmt.Printf("Part 2 - total cubes in active state for 4 dimensions = %d (after 6 rounds)\n", count4D)
 }
 
 func (c Coord) extract() (int, int, int, int) {

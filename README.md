@@ -24,7 +24,7 @@ $ go test ./day10_adapter_array -bench=.
 | 14 | 22 μs | 382 μs | 15 ms |
 | 15 | - | 11 μs | 754 ms |
 | 16 | | | |
-| 17 | | | |
+| 17 | 2.8 μs | 142 μs | 9.1 s |
 | 18 | 18 μs | 1.6 ms | 1.7 ms |
 
 ## Tests
